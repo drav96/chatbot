@@ -4,7 +4,7 @@ let mcib = require('../micb_fixture.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Vanea' });
+	res.render('index', { title: 'This is mister Mr. Pumpkin' });
 });
 
 
