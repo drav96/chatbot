@@ -2,24 +2,31 @@ const express = require('express');
 const router = express.Router();
 let actions = require('./actions');
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
 	res.render('index', {title: 'This is mister Mr. Pumpkin API'});
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', (req, res) => {
+	let currency = req.body.result.parameters.currency_code || null;
 	switch (req.body.result.action) {
 		case "showAllAccounts":
 			actions.showAllAccounts(res);
 			break;
 		case "account.status":
-			actions.accountStatus(res, req.body.result.parameters.currency_code || null);
+			actions.accountStatus(res, currency);
+			break;
+		case "total.transactions":
+			actions.totalTransactions(res);
+			break;
+		case "create.chart":
+			let lastTransactions = req.body.result.parameters.lastTransactions || -15;
+			actions.createChart(res, currency || 'USD', lastTransactions);
+			break;
 		default :
 			console.log("No function")
 	}
 
 
 });
-
 
 module.exports = router;
