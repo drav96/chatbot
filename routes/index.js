@@ -4,12 +4,11 @@ let mcib = require('../micb_fixture.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 's' });
+	res.render('index', { title: 'Hello' });
 });
 
 
 router.post('/', function (req, res, next) {
-	console.log(req.body)
 	res.status(200).json(mcib)
 });
 
