@@ -12,8 +12,8 @@ router.post('/', function (req, res, next) {
 		case "showAllAccounts":
 			actions.showAllAccounts(res);
 			break;
-		case "My balance 2":
-			break;
+		case "account.status":
+			actions.accountStatus(res, req.body.result.parameters.currency_code || null);
 		default :
 			console.log("No function")
 	}
