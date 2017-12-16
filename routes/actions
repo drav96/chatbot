@@ -1,0 +1,11 @@
+let mcib = require('../micb_fixture.json');
+module.exports = {
+	showAllAccounts: async (res) => {
+		let accounts = [];
+		mcib.data.accounts.map(el => {
+			accounts.push(el.name);
+		});
+		let response = accounts.join("\n").toString();
+		await res.status(200).json({"speech": response})
+	}
+}

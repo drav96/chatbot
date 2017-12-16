@@ -1,15 +1,25 @@
-var express = require('express');
-var router = express.Router();
-let mcib = require('../micb_fixture.json');
+const express = require('express');
+const router = express.Router();
+let actions = require('./actions');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-	res.render('index', { title: 'This is mister Mr. Pumpkin' });
+router.get('/', function (req, res, next) {
+	res.render('index', {title: 'This is mister Mr. Pumpkin API'});
 });
-
 
 router.post('/', function (req, res, next) {
-	res.status(200).json(mcib)
+	switch (req.body.result.action) {
+		case "showAllAccounts":
+			actions.showAllAccounts(res);
+			break;
+		case "My balance 2":
+			break;
+		default :
+			console.log("No function")
+	}
+
+
 });
+
 
 module.exports = router;
