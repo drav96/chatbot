@@ -20,8 +20,12 @@ router.post('/', (req, res) => {
 			actions.totalTransactions(res);
 			break;
 		case "create.chart":
+			console.log(req.body)
 			let lastTransactions = req.body.result.parameters.lastTransactions || -15;
 			actions.createChart(res, currency || 'USD', lastTransactions);
+			break;
+		case "create.general.chart":
+			actions.createGeneralChart(res);
 			break;
 		case "show_in_one_currency":
 			actions.showInOneCurrency(res);
