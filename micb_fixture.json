@@ -4005,7 +4005,7 @@
         "status": "posted",
         "checksum": "d171a418937305c5ad4afebfe9caa391f7b60efc2aea4670ccb582e7f40c1ab2"
       }, {
-        "made_on": "2017-11-03",
+        "made_on": "2017-11-03  19:36:41.048",
         "amount": -50.0,
         "currency_code": "USD",
         "description": "CBC generation",
@@ -4016,7 +4016,7 @@
         "status": "pending",
         "checksum": "71e5b897777753654a4f0beb5dedab176973fdbf37569bb659614944ac16edda"
       }, {
-        "made_on": "2017-11-07",
+        "made_on": "2017-11-07  12:25:41.048",
         "amount": 200.0,
         "currency_code": "USD",
         "description": "ATM Cash-In ATM044 \"Invest\" Chisinau (mun.) - Chisinau Moldova, Rep. Of",
@@ -4027,7 +4027,7 @@
         "status": "posted",
         "checksum": "7f93de2f3a6f759745705fa5bd4c8cf2fb9f5eab490666ab702d3724815d0851"
       }, {
-        "made_on": "2017-11-07",
+        "made_on": "2017-11-07 14:15:41.048",
         "amount": 100.0,
         "currency_code": "USD",
         "description": "ATM Cash-In ATM044 \"Invest\" Chisinau (mun.) - Chisinau Moldova, Rep. Of",
@@ -4038,7 +4038,7 @@
         "status": "posted",
         "checksum": "e1326282818eff2fa6ec741272a8177d7461a8b2670bb04130e550ef80aae448"
       }, {
-        "made_on": "2017-11-07",
+        "made_on": "2017-11-07 16:51:41.048",
         "amount": -60.0,
         "currency_code": "USD",
         "description": "ATM ATM044 \"Invest\" Chisinau (mun.) - Chisinau Moldova, Rep. Of",
@@ -4049,7 +4049,7 @@
         "status": "posted",
         "checksum": "a9c246601fa242bb92a51d996bd845eca34936b2e62cefa99c81b09080949fc8"
       }, {
-        "made_on": "2017-11-07",
+        "made_on": "2017-11-07 19:21:41.048",
         "amount": 39.55,
         "currency_code": "USD",
         "description": "ATM Cash-In ATM044 \"Invest\" Chisinau (mun.) - Chisinau Moldova, Rep. Of",
@@ -4060,7 +4060,7 @@
         "status": "posted",
         "checksum": "b7d6a29adfeab54c91bd9e64435c292898609347f73f25d9461f64dced32242b"
       }, {
-        "made_on": "2017-11-08",
+        "made_on": "2017-11-08 9:11:41.048",
         "amount": -31.29,
         "currency_code": "USD",
         "description": "Retail DATSCHA BERLIN Germany",
@@ -4071,7 +4071,7 @@
         "status": "posted",
         "checksum": "31a564cd4ded9a6161394d664720b5691b91fa9e4e5ff50e57a6b8ee7071e244"
       }, {
-        "made_on": "2017-11-08",
+        "made_on": "2017-11-08 10:33:41.048",
         "amount": -6.66,
         "currency_code": "USD",
         "description": "Retail S-BAHN BERLIN BERLIN Germany",
@@ -4082,7 +4082,7 @@
         "status": "posted",
         "checksum": "51979e7d07d93767f88a995f78aad581e3f82b442e5db1c4c4758dfa5056cc7c"
       }, {
-        "made_on": "2017-11-08",
+        "made_on": "2017-11-08 12:23:41.048",
         "amount": -52.58,
         "currency_code": "USD",
         "description": "Retail BISTO MADAMI BERLIN Germany",
