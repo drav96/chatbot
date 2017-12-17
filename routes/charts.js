@@ -1,5 +1,5 @@
 var plotly = require('plotly')("sezghin314", "B90jFmbfCWgxrd8AmfCj");
-var _=require('loadash');
+var _ = require('lodash');
 module.exports = {
 
 	plot: (res, transactionTime, amount) => {
