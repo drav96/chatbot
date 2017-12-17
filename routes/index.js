@@ -23,7 +23,13 @@ router.post('/', (req, res) => {
 			actions.createChart(res, currency || 'USD', lastTransactions);
 			break;
 		case "show_in_one_currency":
-			actions.showInOneCurrency(res);
+			actions.showInOneCurrency(res, req);
+			break;
+		case "show_all_categories":
+			actions.showAllCategories(res);
+			break;
+		case "money_on_category":
+			actions.moneyOnCategory(res, req);
 			break;
 		default :
 			console.log("No function")

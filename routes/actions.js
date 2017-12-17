@@ -71,15 +71,73 @@ module.exports = {
 		charts.plot(res, selectedTransactions, amount);
 
 	},
-    showInOneCurrency: (res1) => {
+    showInOneCurrency: (res1, req) => {
         let usd = parseFloat(mcib.data.accounts.find(x => x.currency_code === 'USD').balance);
         let mdl = parseFloat(mcib.data.accounts.find(x => x.currency_code === 'MDL').balance);
 
         request.get('https://xe.md/currency/17.12.2017?organisation=all', function(err,res,body) {
-            let usdCost = parseFloat(JSON.parse(body, null, 2).BNM.USD.buy);
-            let result = (usd + mdl / usdCost).toFixed(2);
+            let requiredCurency = req.body.result.parameters.currency_name;
+        	let usdCost = parseFloat(JSON.parse(body, null, 2).BNM.USD.buy);
 
-            res1.status(200).json({"speech": result.toString() + " USD"})
+        	let result = "";
+        	if (requiredCurency === 'USD')
+        		result = (usd + mdl / usdCost).toFixed(2).toString() + " " + requiredCurency;
+        	else
+            	result = (mdl + usd * usdCost).toFixed(2).toString() + " " + requiredCurency;
+
+            res1.status(200).json({"speech": result})
+        });
+	},
+	showAllCategories: (res) => {
+        let allTransactions = []
+        mcib.data.accounts.forEach(x => allTransactions.push(x.transactions));
+        allTransactions = allTransactions[0];
+        let allCategoriesSet = new Set(allTransactions.map(x => x.extra.original_category));
+        let result = Array.from(allCategoriesSet).join('\n');
+
+        res.status(200).json({"speech": result});
+	},
+	moneyOnCategory: (res, req) => {
+        let allTransactions = []
+        mcib.data.accounts.forEach(x => allTransactions.push(x.transactions));
+        allTransactions = allTransactions[0];
+        let requiredCurency = req.body.result.parameters.currency_name;
+        let targetCategory = req.body.result.parameters.category_name;
+
+        if (requiredCurency === "")
+        	requiredCurency = "MDL";
+
+        let filteredTransactions = allTransactions
+			.filter(x => x.extra.original_category.toUpperCase() === targetCategory.toUpperCase());
+
+        if (filteredTransactions.length === 0)
+		{
+            res.status(200).json({"speech": "No such category '" + targetCategory + "'"});
+			return;
+		}
+
+        request.get('https://xe.md/currency/17.12.2017?organisation=all', function(err,_res,body) {
+            let usdCost = parseFloat(JSON.parse(body, null, 2).BNM.USD.buy);
+
+            let sum = 0;
+            filteredTransactions.forEach(x =>
+			{
+				if (x.currency_code !== requiredCurency)
+				{
+					if (requiredCurency === 'USD')
+						sum += parseFloat(x.amount) / usdCost;
+					else
+						sum += parseFloat(x.amount) * usdCost;
+				}
+				else
+					sum += parseFloat(x.amount);
+			});
+
+            sum *= -1;
+            let result = "Money spent on " + targetCategory + ": " + sum.toFixed(2).toString()
+				+ " " + requiredCurency;
+
+            res.status(200).json({"speech": result})
         });
 	}
 
