@@ -35,6 +35,12 @@ router.post('/', (req, res) => {
 		case "money_on_category":
 			actions.moneyOnCategory(res, req);
 			break;
+		case "available_amount":
+			actions.availableAmount(res);
+			break;
+		case "last_transactions":
+			actions.lastTransactions(res, req);
+			break;
 		default :
 			console.log("No function")
 	}

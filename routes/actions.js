@@ -134,18 +134,14 @@ module.exports = {
         });
 	},
 	showAllCategories: (res) => {
-        let allTransactions = []
-        mcib.data.accounts.forEach(x => allTransactions.push(x.transactions));
-        allTransactions = allTransactions[0];
+        let allTransactions = getAllTransactions();
         let allCategoriesSet = new Set(allTransactions.map(x => x.extra.original_category));
         let result = Array.from(allCategoriesSet).join('\n');
 
         res.status(200).json({"speech": result});
 	},
 	moneyOnCategory: (res, req) => {
-        let allTransactions = []
-        mcib.data.accounts.forEach(x => allTransactions.push(x.transactions));
-        allTransactions = allTransactions[0];
+        let allTransactions = getAllTransactions();
         let requiredCurency = req.body.result.parameters.currency_name;
         let targetCategory = req.body.result.parameters.category_name;
 
@@ -184,7 +180,32 @@ module.exports = {
 
             res.status(200).json({"speech": result})
         });
-	}
+	},
+    availableAmount: (res) => {
+        let result = mcib.data.accounts.map(x =>
+            x.extra.available_amount + " " + x.currency_code).join('\n');
+        res.status(200).json({"speech": result})
+    },
+    lastTransactions: (res, req) => {
+	    let transactionCount = req.body.result.parameters.transactionCount;
+	    if (transactionCount === "")
+	        transactionCount = "1";
+	    transactionCount = parseInt(transactionCount);
+
+        let allTransactions = getAllTransactions();
+        allTransactions.sort(function(a, b) {
+            return Date.parse(a.made_on) - Date.parse(b.made_on);
+        });
+
+        allTransactions = allTransactions.slice(Math.max(1, allTransactions.length - transactionCount))
+            .reverse();
+
+        result = allTransactions.map(x => x.amount.toString() + " " + x.currency_code +
+            " on " + x.made_on + " for " + x.extra.original_category).join('\n');
+
+        res.status(200).json({"speech": result})
+    },
+
 
 };
 
@@ -192,4 +213,10 @@ let balance = (accounts) => {
 	return accounts.map(el => {
 		return `${el.name.toString()}: ${el.balance.toString()} ${el.currency.toString()} `
 	}).join('\n');
+}
+
+function getAllTransactions() {
+    return mcib.data.accounts[0].transactions.concat(
+        mcib.data.accounts[1].transactions
+    );
 }

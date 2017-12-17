@@ -12,6 +12,13 @@ module.exports = {
 		var graphOptions = {filename: "date-axes", fileopt: "overwrite"};
 		plotly.plot(data, graphOptions, (err, msg) => {
 			res.status(200).json({"speech": msg.url})
+            // res.status(200).json({"messages": [
+				// 	{
+            //             "imageUrl": msg.url + '.png',
+            //             "platform": "telegram",
+            //             "type": 3
+				// 	}
+				// ]})
 		});
 
 	},
