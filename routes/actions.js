@@ -1,5 +1,6 @@
 let mcib = require('../micb_fixture.json');
 let charts = require('./charts');
+var request=require('request');
 
 module.exports = {
 	showAllAccounts: (res) => {
@@ -69,6 +70,17 @@ module.exports = {
 		});
 		charts.plot(res, selectedTransactions, amount);
 
+	},
+    showInOneCurrency: (res1) => {
+        let usd = parseFloat(mcib.data.accounts.find(x => x.currency_code === 'USD').balance);
+        let mdl = parseFloat(mcib.data.accounts.find(x => x.currency_code === 'MDL').balance);
+
+        request.get('https://xe.md/currency/17.12.2017?organisation=all', function(err,res,body) {
+            let usdCost = parseFloat(JSON.parse(body, null, 2).BNM.USD.buy);
+            let result = (usd + mdl / usdCost).toFixed(2);
+
+            res1.status(200).json({"speech": result.toString() + " USD"})
+        });
 	}
 
 };

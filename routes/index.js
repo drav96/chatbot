@@ -22,10 +22,12 @@ router.post('/', (req, res) => {
 			let lastTransactions = req.body.result.parameters.lastTransactions || -15;
 			actions.createChart(res, currency || 'USD', lastTransactions);
 			break;
+		case "show_in_one_currency":
+			actions.showInOneCurrency(res);
+			break;
 		default :
 			console.log("No function")
 	}
-
 
 });
 
