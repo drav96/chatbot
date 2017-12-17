@@ -1,48 +1,25 @@
 var plotly = require('plotly')("sezghin314", "B90jFmbfCWgxrd8AmfCj");
-var fs = require('fs');
-var request = require('request')
+
 module.exports = {
+
 	plot: (res, transactionTime, amount) => {
-		// let data = [
-		// 	{
-		// 		x: transactionTime,
-		// 		y: amount,
-		// 		type: "scatter"
-		// 	}
-		// ];
-		// var graphOptions = {filename: "date-axes", fileopt: "overwrite"};
-		// plotly.plot(data, graphOptions, (err, msg) => {
-		// 	// res.status(200).json({"messages": [
-		// 	// 	{
-		// 	//             "imageUrl": msg.url + '.png',
-		// 	//             "platform": "telegram",
-		// 	//             "type": 3
-		// 	// 	}
-		// 	// ]})
-		// });
-
-		let figure = {
-			'data': [
-				{
-					x: transactionTime,
-					y: amount,
-					type: "scatter"
-				}
-			]
-		};
-
-		let imgOpts = {
-			format: 'png',
-			width: 1000,
-			height: 500
-		};
-
-		plotly.getImage(figure, imgOpts, (error, imageStream) => {
-			if (error) return console.log(error);
-			let name = Math.random().toString(36).substring(7);
-			let fileStream = fs.createWriteStream(`./public/${name}.png`);
-			imageStream.pipe(fileStream);
-			res.status(200).json({"speech": `https://faf-hackthon.herokuapp.com/${name}.png`})
+		let data = [
+			{
+				x: transactionTime,
+				y: amount,
+				type: "scatter"
+			}
+		];
+		var graphOptions = {filename: "date-axes", fileopt: "overwrite"};
+		plotly.plot(data, graphOptions, (err, msg) => {
+			res.status(200).json({"speech": msg.url})
+			// res.status(200).json({"messages": [
+			// 	{
+			//             "imageUrl": msg.url + '.png',
+			//             "platform": "telegram",
+			//             "type": 3
+			// 	}
+			// ]})
 		});
 	},
 	plotTwo: (res, array1, amount, array2, amount2) => {
