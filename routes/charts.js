@@ -1,5 +1,5 @@
 var plotly = require('plotly')("sezghin314", "B90jFmbfCWgxrd8AmfCj");
-
+var _=require('loadash');
 module.exports = {
 
 	plot: (res, transactionTime, amount) => {
@@ -12,7 +12,7 @@ module.exports = {
 		];
 		var graphOptions = {filename: "date-axes", fileopt: "overwrite"};
 		plotly.plot(data, graphOptions, (err, msg) => {
-			res.status(200).json({"speech": msg.url})
+			res.status(200).json({"messages": [{imageUrl: msg.url+`?id=${_.uniqueId()}`, type: 3}]})
 			// res.status(200).json({"messages": [
 			// 	{
 			//             "imageUrl": msg.url + '.png',
