@@ -55,7 +55,7 @@ module.exports = {
 		let selectedAmount = [];
 		let filterTransactions = mcib.data.accounts.filter(el => el.currency_code === currency)[0];
 		let initialBalance = filterTransactions.balance;
-		let lastTransactions = filterTransactions.transactions.slice(-timeFrame);
+		let lastTransactions = filterTransactions.transactions.slice(-timeFrame).reverse();
 
 		lastTransactions.map(el => {
 			selectedTransactions.push(el.made_on);
@@ -68,7 +68,52 @@ module.exports = {
 			initialBalance -= x;
 			return initialBalance;
 		});
-		charts.plot(res, selectedTransactions, amount);
+
+		charts.plot(res, selectedTransactions.reverse(), amount);
+
+	},
+	createGeneralChart: (res, currency, timeFrame) => {
+		let selectedTransactions = [];
+		let selectedTransactions2 = [];
+		let selectedAmount2 = [];
+
+		let selectedAmount = [];
+		let filterTransactions = mcib.data.accounts.filter(el => el.currency_code === "USD")[0];
+		let filterTransactions2 = mcib.data.accounts.filter(el => el.currency_code === "MDL")[0];
+
+		let initialBalance = filterTransactions.balance;
+		let initialBalance2 = filterTransactions.balance;
+
+		let lastTransactions = filterTransactions.transactions.slice(-timeFrame);
+		let lastTransactions2 = filterTransactions2.transactions.slice(-timeFrame);
+
+		lastTransactions.map(el => {
+			selectedTransactions.push(el.made_on);
+		});
+		lastTransactions2.map(el => {
+			selectedTransactions2.push(el.made_on);
+		});
+
+
+		lastTransactions.map(el => {
+			selectedAmount.push(el.amount);
+		});
+
+		lastTransactions2.map(el => {
+			selectedAmount2.push(el.amount);
+		});
+
+
+		let amount = selectedAmount.reverse().map(x => {
+			initialBalance -= x;
+			return initialBalance;
+		});
+		let amount2 = selectedAmount2.reverse().map(x => {
+			initialBalance2 -= x;
+			return initialBalance2;
+		});
+
+		charts.plotTwo(res, selectedTransactions.reverse(), amount, selectedTransactions2.reverse(),amount2);
 
 	},
     showInOneCurrency: (res1, req) => {
