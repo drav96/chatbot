@@ -41,6 +41,12 @@ router.post('/', (req, res) => {
 		case "last_transactions":
 			actions.lastTransactions(res, req);
 			break;
+		case "money_spent_on_categories":
+			actions.plotMoneySpent(res);
+			break;
+		case "plot_income":
+			actions.plotIncome(res);
+			break;
 		default :
 			console.log("No function")
 	}

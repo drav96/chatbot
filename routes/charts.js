@@ -52,6 +52,29 @@ module.exports = {
 		plotly.plot(data, graphOptions, function (err, msg) {
 			res.status(200).json({"speech": msg.url})
 		});
+	},
+	plotMoneySpent: (res, categoryAndMoney) => {
+		console.log();
+
+		let labels = Array.from(Object.keys(categoryAndMoney));
+		let values = labels.map(k => parseFloat(categoryAndMoney[k]));
+
+		let data = [{
+			values: values,
+			labels: labels,
+			type: 'pie'
+		}];
+		console.log(data);
+		var layout = {
+            height: 1000,
+            width: 1200,
+            fileopt: 'overwrite',
+            filename: 'multiple-axes-double',
+		};
+
+        plotly.plot(data, layout, function (err, msg) {
+            res.status(200).json({"speech": msg.url});
+        });
 	}
 
 }

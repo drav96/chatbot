@@ -134,10 +134,7 @@ module.exports = {
         });
 	},
 	showAllCategories: (res) => {
-        let allTransactions = getAllTransactions();
-        let allCategoriesSet = new Set(allTransactions.map(x => x.extra.original_category));
-        let result = Array.from(allCategoriesSet).join('\n');
-
+        let result = getAllCategories().join('\n');
         res.status(200).json({"speech": result});
 	},
 	moneyOnCategory: (res, req) => {
@@ -205,7 +202,66 @@ module.exports = {
 
         res.status(200).json({"speech": result})
     },
+    plotMoneySpent: (res) => {
+	    let allCategories = getAllCategories();
+	    let categoriesAndValues = {};
+        allCategories.forEach(x => {
+            let name = x.replace('&', ' ');
+            console.log(name);
+            categoriesAndValues[name] = 0;
+        });
 
+	    let allTransactions = getAllTransactions();
+        request.get('https://xe.md/currency/17.12.2017?organisation=all', function(err,_res,body) {
+            let usdCost = parseFloat(JSON.parse(body, null, 2).BNM.USD.buy);
+
+            allTransactions.forEach(x => {
+               let money = parseFloat(x.amount);
+               if (x.currency_code === 'USD')
+                   money *= usdCost;
+
+               let name = x.extra.original_category.replace('&', ' ');
+                categoriesAndValues[name] += money;
+            });
+            Object.keys(categoriesAndValues).forEach(k => {
+               if (categoriesAndValues[k] > 0)
+                   categoriesAndValues[k] = 0;
+               else
+                   categoriesAndValues[k] *= -1;
+            });
+            charts.plotMoneySpent(res, categoriesAndValues);
+        });
+    },
+    plotIncome: (res) => {
+        let allCategories = getAllCategories();
+        let categoriesAndValues = {};
+        allCategories.forEach(x => {
+            let name = x.replace('&', ' ');
+            console.log(name);
+            categoriesAndValues[name] = 0;
+        });
+
+        let allTransactions = getAllTransactions();
+        request.get('https://xe.md/currency/17.12.2017?organisation=all', function(err,_res,body) {
+            let usdCost = parseFloat(JSON.parse(body, null, 2).BNM.USD.buy);
+
+            allTransactions.forEach(x => {
+                let money = parseFloat(x.amount);
+                if (x.currency_code === 'USD')
+                    money *= usdCost;
+
+                let name = x.extra.original_category.replace('&', ' ');
+                categoriesAndValues[name] += money;
+            });
+
+            Object.keys(categoriesAndValues).forEach(k => {
+                if (categoriesAndValues[k] < 0)
+                    categoriesAndValues[k] = 0;
+            });
+
+            charts.plotMoneySpent(res, categoriesAndValues);
+        });
+    }
 
 };
 
@@ -219,4 +275,11 @@ function getAllTransactions() {
     return mcib.data.accounts[0].transactions.concat(
         mcib.data.accounts[1].transactions
     );
+}
+
+function getAllCategories() {
+    let allTransactions = getAllTransactions();
+    let allCategoriesSet = new Set(allTransactions.map(x => x.extra.original_category));
+    return Array.from(allCategoriesSet);
+
 }
