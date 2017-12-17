@@ -1,6 +1,6 @@
 let mcib = require('../micb_fixture.json');
 let charts = require('./charts');
-var request=require('request');
+var request = require('request');
 
 module.exports = {
 	showAllAccounts: (res) => {
@@ -55,7 +55,7 @@ module.exports = {
 		let selectedAmount = [];
 		let filterTransactions = mcib.data.accounts.filter(el => el.currency_code === currency)[0];
 		let initialBalance = filterTransactions.balance;
-		let lastTransactions = filterTransactions.transactions.slice(-timeFrame);
+		let lastTransactions = filterTransactions.transactions.slice(-timeFrame).reverse();
 
 		lastTransactions.map(el => {
 			selectedTransactions.push(el.made_on);
@@ -68,20 +68,21 @@ module.exports = {
 			initialBalance -= x;
 			return initialBalance;
 		});
+
 		charts.plot(res, selectedTransactions, amount);
 
 	},
-    showInOneCurrency: (res1) => {
-        let usd = parseFloat(mcib.data.accounts.find(x => x.currency_code === 'USD').balance);
-        let mdl = parseFloat(mcib.data.accounts.find(x => x.currency_code === 'MDL').balance);
+	showInOneCurrency: (res1) => {
+		let usd = parseFloat(mcib.data.accounts.find(x => x.currency_code === 'USD').balance);
+		let mdl = parseFloat(mcib.data.accounts.find(x => x.currency_code === 'MDL').balance);
 
-        request.get('https://xe.md/currency/17.12.2017?organisation=all', function(err,res,body) {
-            let usdCost = parseFloat(JSON.parse(body, null, 2).BNM.USD.buy);
-            let result = (usd + mdl / usdCost).toFixed(2);
+		request.get('https://xe.md/currency/17.12.2017?organisation=all', function (err, res, body) {
+			let usdCost = parseFloat(JSON.parse(body, null, 2).BNM.USD.buy);
+			let result = (usd + mdl / usdCost).toFixed(2);
 
-            res1.status(200).json({"speech": result.toString() + " USD"})
-        });
-	}
+			res1.status(200).json({"speech": result.toString() + " USD"})
+		});
+	},
 
 };
 

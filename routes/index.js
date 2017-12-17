@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const moment=require('moment');
 let actions = require('./actions');
 
 router.get('/', function (req, res) {
@@ -25,6 +26,9 @@ router.post('/', (req, res) => {
 		case "show_in_one_currency":
 			actions.showInOneCurrency(res);
 			break;
+		// case "interval.transaction":
+		// 	// actions.intervalTransaction(moment('08-01-2017'), moment('10-01-2017'));
+		// 	break;
 		default :
 			console.log("No function")
 	}
