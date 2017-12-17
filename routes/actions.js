@@ -55,7 +55,7 @@ module.exports = {
 		let selectedAmount = [];
 		let filterTransactions = mcib.data.accounts.filter(el => el.currency_code === currency)[0];
 		let initialBalance = filterTransactions.balance;
-		let lastTransactions = filterTransactions.transactions.slice(-timeFrame).reverse();
+		let lastTransactions = filterTransactions.transactions.slice(-timeFrame);
 
 		lastTransactions.map(el => {
 			selectedTransactions.push(el.made_on);
