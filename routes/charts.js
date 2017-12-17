@@ -12,14 +12,14 @@ module.exports = {
 		];
 		var graphOptions = {filename: "date-axes", fileopt: "overwrite"};
 		plotly.plot(data, graphOptions, (err, msg) => {
-			res.status(200).json({"messages": [{imageUrl: msg.url+`?id=${_.uniqueId()}`, type: 3}]})
-			// res.status(200).json({"messages": [
-			// 	{
-			//             "imageUrl": msg.url + '.png',
-			//             "platform": "telegram",
-			//             "type": 3
-			// 	}
-			// ]})
+			// res.status(200).json({"messages": [{imageUrl: msg.url+`?id=${_.uniqueId()}`, type: 3}]})
+			res.status(200).json({"messages": [
+				{
+			            "imageUrl": msg.url + '.png'+`?id=${_.uniqueId()}`,
+			            "platform": "telegram",
+			            "type": 3
+				}
+			]})
 		});
 	},
 	plotTwo: (res, array1, amount, array2, amount2) => {
@@ -50,11 +50,15 @@ module.exports = {
 		};
 		var graphOptions = {layout: layout, filename: "multiple-axes-double", fileopt: "overwrite"};
 		plotly.plot(data, graphOptions, function (err, msg) {
-			res.status(200).json({"speech": msg.url})
-		});
+			res.status(200).json({"messages": [
+					{
+						"imageUrl": msg.url + '.png'+`?id=${_.uniqueId()}`,
+						"platform": "telegram",
+						"type": 3
+					}
+				]})		});
 	},
 	plotMoneySpent: (res, categoryAndMoney) => {
-		console.log();
 
 		let labels = Array.from(Object.keys(categoryAndMoney));
 		let values = labels.map(k => parseFloat(categoryAndMoney[k]));
@@ -73,7 +77,13 @@ module.exports = {
 		};
 
 		plotly.plot(data, layout, function (err, msg) {
-			res.status(200).json({"speech": msg.url});
+			res.status(200).json({"messages": [
+					{
+						"imageUrl": msg.url + '.png'+`?id=${_.uniqueId()}`,
+						"platform": "telegram",
+						"type": 3
+					}
+				]})
 		});
 	}
 
