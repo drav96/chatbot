@@ -207,7 +207,6 @@ module.exports = {
 	    let categoriesAndValues = {};
         allCategories.forEach(x => {
             let name = x.replace('&', ' ');
-            console.log(name);
             categoriesAndValues[name] = 0;
         });
 
@@ -237,7 +236,6 @@ module.exports = {
         let categoriesAndValues = {};
         allCategories.forEach(x => {
             let name = x.replace('&', ' ');
-            console.log(name);
             categoriesAndValues[name] = 0;
         });
 
