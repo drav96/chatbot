@@ -42,9 +42,8 @@ module.exports = {
 			let name = Math.random().toString(36).substring(7);
 			let fileStream = fs.createWriteStream(`./public/${name}.png`);
 			imageStream.pipe(fileStream);
-			res.status(200).json({"speech": `https://faf-hackthon.heroku.com/${name}.png`})
+			res.status(200).json({"speech": `https://faf-hackthon.herokuapp.com/${name}.png`})
 		});
-
 	},
 	plotTwo: (res, array1, amount, array2, amount2) => {
 		var trace1 = {
