@@ -1,4 +1,4 @@
-var plotly = require('plotly')("sezghin314", "B90jFmbfCWgxrd8AmfCj");
+var plotly = require('plotly')("gamesvandal1", "dZuAet1gbuZvX3lCS4w3");
 var _ = require('lodash');
 module.exports = {
 
